@@ -17,7 +17,7 @@ dt.features$start <- df.audio$start
 dt.features$end <- df.audio$end
 
 write.table(dt.features,
-            file = "features2.csv",
+            file = "features.csv",
             row.names=FALSE, na="",col.names=TRUE, sep=",")
 
 
