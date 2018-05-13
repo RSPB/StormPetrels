@@ -23,6 +23,8 @@ def find_overlap(group):
         overlap = any((label_start <= end) & (label_end >= start))
         result.append(overlap)
         # print('start {} end {} overlap {}'.format(start, end, overlap))
-    return result
+    group['overlap'] = result
 
-x=feature_group.apply(find_overlap)
+    return group
+
+x = feature_group.apply(find_overlap)
