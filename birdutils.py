@@ -16,5 +16,6 @@ def read_labels(path: str, sheetname: str = None) -> pd.DataFrame:
     :return: pandas dataframe
     """
     sheets = pd.read_excel(path, sheet_name=sheetname, converters={'Time Start': _time_to_total_seconds_converter,
-                                                             'Time End': _time_to_total_seconds_converter})
+                                                                   'Time End': _time_to_total_seconds_converter,
+                                                                   'Species': str.strip })
     return sheets
