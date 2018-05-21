@@ -10,7 +10,7 @@ The data is stored on Google Cloud Platform [Storage](https://cloud.google.com/s
 * Command line tool: [gsutil](https://cloud.google.com/storage/docs/gsutil). 
 
 ### gsutil
-When following installation procedure, make sure to execute `gcloud init` to set up the project. To download content of `training` "folder" (strictly speaking, there are no folders on GCS), execute the following:
+When following installation procedure, make sure to execute `gcloud init` to set up the project. To download content of *training* "folder" (strictly speaking, there are no folders on GCS), execute the following:
 
 `gsutil -m rsync -r gs://storm-petrels/training your-destination`
 
