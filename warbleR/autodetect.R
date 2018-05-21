@@ -12,13 +12,17 @@ df.audio <- autodetec(threshold = 4, envt = "abs", ssmooth = 1200, power=1,
 
 df.audio <- df.audio[complete.cases(df.audio),]
 df.audio$sound.files <- tools::file_path_sans_ext(df.audio$sound.files)
-df.features <- specan(X = df.audio, bp=c(1,8), fast = FALSE, parallel = 10, wl = 256, threshold = 4)
+
+df.audio$start <- df.audio$start - 0.25
+df.audio$end <- df.audio$end + 0.25
+
+df.features <- specan(X = df.audio, bp=c(1,8), fast = TRUE, parallel = 10, wl = 256, threshold = 4)
 dt.features <- data.table(df.features) 
 
 dt.features$start <- df.audio$start
 dt.features$end <- df.audio$end
 
 write.table(dt.features,
-            file = "features.csv",
+            file = "features_all_16k.csv",
             row.names=FALSE, na="",col.names=TRUE, sep=",")
 
