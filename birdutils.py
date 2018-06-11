@@ -8,7 +8,7 @@ def _time_to_total_seconds_converter(val):
     return total_seconds
 
 
-def read_labels(path: str, sheetname: str = None) -> pd.DataFrame:
+def read_labels(path, sheetname = None) -> pd.DataFrame:
     """
     Read labels from Excel file.
     :param path: path
