@@ -2,7 +2,7 @@ library(warbleR)
 library(data.table)
 library(stats)
 
-setwd(file.path("/mnt/data/Birdman/full_split_10min"))
+setwd(file.path("/mnt/data/Birdman/samples/test/"))
 
 df.audio <- autodetec(threshold = 4, envt = "abs", ssmooth = 1200, power=1,
                       bp=c(1,8), xl = 2, picsize = 2, res = 200, 
