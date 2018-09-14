@@ -2,27 +2,32 @@ library(warbleR)
 library(data.table)
 library(stats)
 
-setwd(file.path("/mnt/data/Birdman/samples/test/"))
+setwd(file.path("/mnt/data/Birdman/samples/recordings/"))
 
-df.audio <- autodetec(threshold = 4, envt = "abs", ssmooth = 1200, power=1,
-                      bp=c(1,8), xl = 2, picsize = 2, res = 200, 
-                      flim= c(1,8), osci = FALSE, redo = TRUE,
-                      wl = 256, ls = TRUE, sxrow = 10, rows = 8, 
-                      mindur = 0.1, maxdur = 1, set = TRUE, parallel = 10)
+bp <- c(1,8)
+wl <- 512
+th <- 10
+smooth <- 1200
+
+df.audio <- autodetec(threshold = th, envt = "abs", power=1,
+                      bp = bp, flim = bp, ssmooth = smooth, redo = TRUE,
+                      wl = wl,  mindur = 0.2, maxdur = 4, set = TRUE, parallel = 14)
 
 df.audio <- df.audio[complete.cases(df.audio),]
-df.audio$sound.files <- tools::file_path_sans_ext(df.audio$sound.files)
+#df.audio$sound.files <- tools::file_path_sans_ext(df.audio$sound.files)
 
-df.audio$start <- df.audio$start - 0.25
-df.audio$end <- df.audio$end + 0.25
+# df.audio$start <- df.audio$start - 0.25
+# df.audio$end <- df.audio$end + 0.25
 
-df.features <- specan(X = df.audio, bp=c(1,8), fast = TRUE, parallel = 10, wl = 256, threshold = 4)
-dt.features <- data.table(df.features) 
+df.features <- specan(X = df.audio, bp=bp, fast = TRUE, parallel = 14, wl = wl, threshold = th)
+df.features <- data.table(df.features) 
 
-dt.features$start <- df.audio$start
-dt.features$end <- df.audio$end
+df.features$start <- df.audio$start
+df.features$end <- df.audio$end
 
-write.table(dt.features,
-            file = "features_all_16k.csv",
+out_filename <- sprintf('autodetect_petrels_bp%s_wl%s_th%s_smooth%s_maxdur4.csv', paste(bp, collapse = '-'), wl, th, smooth)
+
+write.table(df.features,
+            file = out_filename,
             row.names=FALSE, na="",col.names=TRUE, sep=",")
 
